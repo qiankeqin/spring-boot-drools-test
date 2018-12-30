@@ -1,0 +1,19 @@
+package rules;
+dialect  "mvel"
+import xyz.spring4all.springbootdroolstest.domain.Person;
+
+rule "showObj"
+    when
+        //1.定义变量Person $person，条件name||age
+        $person : Person($person.getName()=="hello" || $person.getAge()==18)
+    then
+        System.out.println($person);
+end
+
+rule "showObjList"
+    when
+        //1.定义变量Person $person，条件name||age
+        $person : Person(interests.size()>0 && interests.get(0)=="helloworld")
+    then
+        System.out.println($person);
+end

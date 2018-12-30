@@ -6,4 +6,5 @@ rule "test"
         $d : Double();
     then
         System.out.println($d);
+
 end
