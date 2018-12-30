@@ -1,19 +1,68 @@
 package rules;
 dialect  "mvel"
 import xyz.spring4all.springbootdroolstest.domain.Person;
-
+import org.apache.commons.lang3.StringUtils;
 rule "showObj"
     when
         //1.定义变量Person $person，条件name||age
         $person : Person($person.getName()=="hello" || $person.getAge()==18)
     then
-        System.out.println($person);
+        System.out.println("showObj:"+$person);
 end
 
 rule "showObjList"
     when
-        //1.定义变量Person $person，条件name||age
-        $person : Person(interests.size()>0 && interests.get(0)=="helloworld")
+        $person : Person(interests!=null && interests.size()>0 && interests.get(0)=="helloworld")
     then
-        System.out.println($person);
+        System.out.println("showObjList:"+$person);
 end
+
+rule "showObjMap"
+    when
+        $person : Person(otherDetails!=null && StringUtils.isNotEmpty(otherDetails.get("address")))
+    then
+        System.out.println("showObjMap,地址信息是："+$person.getOtherDetails().get("address"));
+end
+
+rule "showDouble"
+    when
+        $d : Double($d == 2.0)
+    then
+        System.out.println("showDouble,"+$d);
+end
+
+rule "showRegex"
+    when
+        $person : Person(name matches "Mr.*")
+    then
+        System.out.println("showRegex:"+$person.getName());
+end
+
+
+rule "showMember"
+    when
+        $person : Person("gulong" memberOf interests)
+    then
+        System.out.println("showMember:"+$person.getName());
+end
+
+
+rule "showContain"
+    when
+        $person : Person(interests contains "jinyong")
+    then
+        System.out.println("showMember:"+$person.getName());
+end
+
+rule "showFrom"
+    when
+        $person : Person()
+        $str : String(this=="hello" || this=="world") from $person.interests
+    then
+        System.out.println("showFrom:"+$str);
+end
+
+
+
+
+

@@ -1,6 +1,8 @@
 package xyz.spring4all.springbootdroolstest.domain;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @program: spring-boot-drools-test
@@ -12,6 +14,15 @@ public class Person {
     private String name;
     private Integer age;
     private List<String> interests;
+    private Map<String,String> otherDetails = new HashMap<>();
+
+    public Map<String, String> getOtherDetails() {
+        return otherDetails;
+    }
+
+    public void setOtherDetails(Map<String, String> otherDetails) {
+        this.otherDetails = otherDetails;
+    }
 
     public List<String> getInterests() {
         return interests;
@@ -43,6 +54,7 @@ public class Person {
                 "name='" + name + '\'' +
                 ", age=" + age +
                 ", interests=" + interests +
+                ", otherDetails=" + otherDetails +
                 '}';
     }
 }

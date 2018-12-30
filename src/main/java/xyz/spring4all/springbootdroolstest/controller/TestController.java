@@ -29,6 +29,21 @@ public class TestController {
         return "ok";
     }
 
+
+    /**
+     * 测试规则引擎
+     * @param num
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/index/testDouble")
+    public Object show(@RequestParam Double num) throws Exception {
+        KieSession kieSession = KieSessionUtils.getAllRules();
+        kieSession.insert(num);
+        kieSession.fireAllRules();
+        return "ok";
+    }
+
     /**
      * 测试类参数
      * @param person
@@ -56,4 +71,15 @@ public class TestController {
         kieSession.fireAllRules();
         return person;
     }
+
+    @PostMapping("/index/testObjMap")
+    public Object showObjectMap(@RequestBody Person person) throws Exception{
+        KieSession kieSession = KieSessionUtils.getAllRules();
+        person.getOtherDetails().put("address","zhejiang");
+        person.getOtherDetails().put("nickname","规则引擎");
+        kieSession.insert(person);
+        kieSession.fireAllRules();
+        return person;
+    }
+
 }
