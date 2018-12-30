@@ -15,6 +15,9 @@ public class KieSessionUtils {
     private static KieSession kieSession;
     private static final String RULES_PATH = "rules/";
 
+    public KieSessionUtils() {
+    }
+
     public static KieSession getAllRules() throws Exception{
         try{
             if(kieSession!=null){
@@ -23,7 +26,7 @@ public class KieSessionUtils {
             }
             KieServices kieServices = KieServices.Factory.get();
             KieFileSystem kieFileSystem = kieServices.newKieFileSystem();
-            for(org.springframework.core.io.Resource file : new PathMatchingResourcePatternResolver().getResources("classpath*:"+RULES_PATH)){
+            for(org.springframework.core.io.Resource file : new PathMatchingResourcePatternResolver().getResources("classpath*:"+RULES_PATH+"*.*")){
                 kieFileSystem.write(org.kie.internal.io.ResourceFactory.newClassPathResource(RULES_PATH+file.getFilename(),"UTF-8"));
             }
             final KieRepository kieRepository = KieServices.Factory.get().getRepository();
