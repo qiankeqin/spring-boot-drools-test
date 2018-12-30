@@ -1,0 +1,9 @@
+package rules;
+dialect  "java"
+
+rule "test"
+    when
+        $d : Double();
+    then
+        System.out.println($d);
+end
