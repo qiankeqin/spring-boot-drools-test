@@ -1,7 +1,82 @@
 package rules;
 dialect  "mvel"
+import xyz.spring4all.springbootdroolstest.domain.*;
 
-rule "parameter"
+rule "p1"
+    activation-group "name-switch"
+    salience 999
     when
+        $person : Person(name == "hello")
     then
+        System.out.println("p1:"+$person);
 end
+
+rule "p2"
+    activation-group "name-switch"
+    salience 1001
+    when
+        $person : Person(name == "hello")
+    then
+        System.out.println("p2:"+$person);
+end
+
+rule "p3"
+    activation-group "name-switch"
+    salience 1000
+    when
+        $person : Person(name == "hello")
+    then
+        System.out.println("p3:"+$person);
+end
+
+rule "p4"
+    agenda-group "abc"
+    when
+        $person : Person(name == "hello")
+    then
+        System.out.println("p4:激活"+$person);
+end
+
+
+rule "p5"
+    no-loop true
+    when
+        $stu : Student(name == "hello")
+    then
+        $stu.setAddress("zhejiang");
+        update($stu);
+        System.out.println("p5:"+$stu);
+end
+
+rule "p6"
+lock-on-active true
+    when
+        $stu : Student(address == "zhejiang")
+    then
+//        update($stu);
+        System.out.println("p6:"+$stu);
+end
+
+rule "p7"
+no-loop true
+    when
+        $stu : Student(address == "hangzhou")
+    then
+        $stu.setAddress("zhejiang");
+        update($stu);
+        System.out.println("p7:"+$stu);
+end
+
+rule "p8"
+no-loop true
+    when
+        $stu : Student(address == "wenzhou")
+    then
+        Student stu1 = new Student();
+        stu1.setName("hello");
+        insert(stu1);
+        System.out.println("p8:"+$stu);
+end
+
+
+

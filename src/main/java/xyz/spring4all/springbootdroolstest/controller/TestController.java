@@ -3,6 +3,7 @@ package xyz.spring4all.springbootdroolstest.controller;
 import org.kie.api.runtime.KieSession;
 import org.springframework.web.bind.annotation.*;
 import xyz.spring4all.springbootdroolstest.domain.Person;
+import xyz.spring4all.springbootdroolstest.domain.Student;
 import xyz.spring4all.springbootdroolstest.utils.KieSessionUtils;
 
 import java.util.List;
@@ -81,5 +82,40 @@ public class TestController {
         kieSession.fireAllRules();
         return person;
     }
+
+
+    /**
+     * 测试agenda
+     * @param person
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/index/testAgenda")
+    public Object showAgenda(@RequestBody Person person) throws Exception {
+        KieSession kieSession = KieSessionUtils.getAllRules();
+        kieSession.insert(person);
+        //激活规则
+        kieSession.getAgenda().getAgendaGroup("abc").setFocus();
+        kieSession.fireAllRules();
+        return person;
+    }
+
+
+    /**
+     * no-loop
+     * @param student
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/index/testNoLoop")
+    public Object showNoLoop(@RequestBody Student student) throws Exception {
+        KieSession kieSession = KieSessionUtils.getAllRules();
+        kieSession.insert(student);
+        kieSession.fireAllRules();
+        return student;
+    }
+
+
+
 
 }
