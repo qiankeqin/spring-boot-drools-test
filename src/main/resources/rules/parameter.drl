@@ -79,4 +79,35 @@ no-loop true
 end
 
 
+rule "p9"
+no-loop true
+    when
+        $stu : Student(address == "ningbo")
+    then
+        $stu.setName("hello");
+        System.out.println("p9:"+$stu);
+        retract($stu);
+end
+
+
+rule "p10"
+no-loop true
+    when
+        $stu : Student(address == "ningbo1")
+    then
+        System.out.println("p10:"+$stu);
+        kcontext.getKieRuntime().getAgenda().getAgendaGroup("p10-then").setFocus();
+end
+
+rule "p11"
+agenda-group "p10-then"
+no-loop true
+    when
+        $stu : Student(address == "ningbo1")
+    then
+        System.out.println("p11:"+$stu);
+end
+
+
+
 
